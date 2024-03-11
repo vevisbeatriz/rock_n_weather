@@ -4,6 +4,7 @@ import 'package:rock_n_weather/providers/forecast_page_provider.dart';
 import 'package:rock_n_weather/providers/home_page_provider.dart';
 import 'package:rock_n_weather/screens/forecast_page.dart';
 import 'package:rock_n_weather/screens/cards/weather_card.dart';
+import 'package:rock_n_weather/utilities/constants.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -41,6 +42,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.clearSkyLight,
         title: const Text("Rock 'n' Weather"),
         actions: [
           IconButton(

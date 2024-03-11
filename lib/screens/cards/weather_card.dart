@@ -11,13 +11,20 @@ class WeatherCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
+      height: 160,
       width: double.infinity,
-      margin: const EdgeInsets.all(15),
+
+      margin: const EdgeInsets.only(left: 15, right: 15, top: 15),
       padding: const EdgeInsets.all(15),
       decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(20))),
+          borderRadius: BorderRadius.all(Radius.circular(20)),boxShadow: [
+        BoxShadow(
+          color: Colors.grey,
+          blurRadius: 4,
+          offset: Offset(1, 2), // Shadow position
+        ),
+      ],),
       child: Column(
         children: [
           Text(
@@ -32,7 +39,7 @@ class WeatherCard extends StatelessWidget {
                 flex: 3,
                 child: Image.network(
                   "http://openweathermap.org/img/wn/${weather.icon}@4x.png",
-                  height: 140,
+                  height: 100,
                 ),
               ),
               // The temperature and description are displayed in a Column widget.

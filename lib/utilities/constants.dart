@@ -7,6 +7,7 @@ class AppColors {
   static const rainGradient = [rainBlueLight, rainBlueDark];
   static const accentColor = Color(0xFFe96e50);
   static const forecastCard = Color(0x90FFFFFF);
+  static const clearSkyLight = Color(0xFFCBEEFF);
 }
 
 const titleStyle = TextStyle(
@@ -14,10 +15,10 @@ const titleStyle = TextStyle(
 );
 
 const tempStyle = TextStyle(
-  fontSize: 60.0,
+  fontSize: 50.0,
     fontWeight: FontWeight.w700,
 );
 
 const regularStyle = TextStyle(
-  fontSize: 20.0,
+  fontSize: 15.0,
 );

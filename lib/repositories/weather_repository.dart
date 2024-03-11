@@ -41,9 +41,9 @@ class WeatherRepository implements WeatherRepositoryProtocol {
         forecast.add(WeatherModel(
           cityName: cityName,
           currentTemperature: forecastWeatherModel.list![i].main!.temp!,
-          description: forecastWeatherModel.list![i].weather?.first.main,
+          description: forecastWeatherModel.list![i].weather?.first.description,
           icon: forecastWeatherModel.list![i].weather?.first.icon,
-          date: DateTime.fromMicrosecondsSinceEpoch(forecastWeatherModel.list![i].dt ?? 0),
+          date: forecastWeatherModel.list![i].dtTxt,
         ));
       }
       return forecast;

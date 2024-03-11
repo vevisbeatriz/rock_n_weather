@@ -23,6 +23,7 @@ class ForecastPageNotifier extends StateNotifier<ForecastPageState> {
 
   void fetchForecastWeather(
       {required String cityName, required String countryName}) async {
+    state = state.copyWith(forecast: null, forecastPageStatus: ForecastStatusType.loading);
     final forecast = await _weatherRepository.fetchForecastWeather(
         cityName: cityName, countryName: countryName);
     state = state.copyWith(forecast: forecast, forecastPageStatus: forecast == null ? ForecastStatusType.error : ForecastStatusType.loaded);
