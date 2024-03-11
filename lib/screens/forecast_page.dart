@@ -3,13 +3,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rock_n_weather/providers/forecast_page_provider.dart';
 
 class ForecastPage extends ConsumerWidget {
-  const ForecastPage({super.key});
+  const ForecastPage({super.key, required this.cityName});
+  final String cityName;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final forecastPageModel = ref.watch(forecastPageProvider);
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text(cityName),
+      ),
       body: forecastPageModel.forecast == null
           ? const Center(child: CircularProgressIndicator())
           : SafeArea(

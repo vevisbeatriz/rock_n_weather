@@ -32,6 +32,13 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     final homePageModel = ref.watch(homePageProvider);
+    final searchBarController = TextEditingController();
+
+    searchBarController.text = homePageModel.searchText;
+    searchBarController.selection = TextSelection.fromPosition(
+      TextPosition(offset: searchBarController.text.length),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Rock 'n' Weather"),
@@ -52,29 +59,65 @@ class _HomePageState extends ConsumerState<HomePage> {
           : homePageModel.homePageStatus == HomePageStatusType.error
               ? const Center(child: Text("Error"))
               : SafeArea(
-                  child: ListView.builder(
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        onTap: () {
+                  child: Column(
+                    children: [
+                      SearchBar(
+                        controller: searchBarController,
+                        hintText: "Search for a city",
+                        elevation: MaterialStateProperty.all(0),
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.white),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0),
+                          ),
+                        ),
+                        leading: const Icon(Icons.search),
+                        trailing: <Widget>[
+                          IconButton(
+                            onPressed: () {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              searchBarController.clear();
+                              ref
+                                  .read(homePageProvider.notifier)
+                                  .filterCitiesWeather(filter: "");
+                            },
+                            icon: const Icon(Icons.clear),
+                          ),
+                        ],
+                        onChanged: (value) async {
                           ref
-                              .read(forecastPageProvider.notifier)
-                              .fetchForecastWeather(
-                                cityName: listOfCities[index].$1,
-                                countryName: listOfCities[index].$2,
-                              );
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ForecastPage(),
-                            ),
-                          );
+                              .read(homePageProvider.notifier)
+                              .filterCitiesWeather(filter: value);
                         },
-                        child: WeatherCard(
-                            weather: homePageModel.citiesWeather![index]),
-                      );
-                    },
-                    itemCount: homePageModel.citiesWeather!.length,
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          itemBuilder: (BuildContext context, int index) {
+                            return GestureDetector(
+                              onTap: () {
+                                ref
+                                    .read(forecastPageProvider.notifier)
+                                    .fetchForecastWeather(
+                                      cityName: listOfCities[index].$1,
+                                      countryName: listOfCities[index].$2,
+                                    );
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ForecastPage(cityName: listOfCities[index].$1),
+                                  ),
+                                );
+                              },
+                              child: WeatherCard(
+                                  weather: homePageModel.citiesWeather![index]),
+                            );
+                          },
+                          itemCount: homePageModel.citiesWeather!.length,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
     );
