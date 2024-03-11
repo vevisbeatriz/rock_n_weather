@@ -6,6 +6,9 @@ import 'package:rock_n_weather/screens/forecast_page.dart';
 import 'package:rock_n_weather/screens/cards/weather_card.dart';
 import 'package:rock_n_weather/utilities/constants.dart';
 
+/// A widget that displays the home page of the application.
+///
+/// This is a [ConsumerStatefulWidget], which means it has access to the Riverpod state.
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
@@ -13,7 +16,11 @@ class HomePage extends ConsumerStatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+/// The state for the [HomePage] widget.
+///
+/// This is where the logic for the home page is implemented.
 class _HomePageState extends ConsumerState<HomePage> {
+  /// A list of tuples representing the cities for which to fetch the weather.
   final listOfCities = [
     ("Silverstone", "UK"),
     ("Sao Paulo", "BR"),
@@ -32,6 +39,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Get the current state of the home page.
     final homePageModel = ref.watch(homePageProvider);
     final searchBarController = TextEditingController();
 
@@ -50,6 +58,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 homePageModel.homePageStatus == HomePageStatusType.loading
                     ? null
                     : () {
+                        // Refresh the weather data when the refresh button is pressed.
                         _fetchInitialCitiesWeather();
                       },
             icon: const Icon(Icons.refresh),
@@ -57,7 +66,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         ],
       ),
       body: homePageModel.homePageStatus == HomePageStatusType.loading
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator(color: Colors.white,))
           : homePageModel.homePageStatus == HomePageStatusType.error
               ? const Center(child: Text("Error"))
               : SafeArea(
@@ -78,6 +87,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         trailing: <Widget>[
                           IconButton(
                             onPressed: () {
+                              // Clear the search bar and reset the filter when the clear button is pressed.
                               FocusManager.instance.primaryFocus?.unfocus();
                               searchBarController.clear();
                               ref
@@ -88,6 +98,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           ),
                         ],
                         onChanged: (value) async {
+                          // Filter the cities based on the search bar text.
                           ref
                               .read(homePageProvider.notifier)
                               .filterCitiesWeather(filter: value);
@@ -98,17 +109,19 @@ class _HomePageState extends ConsumerState<HomePage> {
                           itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(
                               onTap: () {
+                                // Fetch the forecast for the selected city and navigate to the forecast page when a city is tapped.
                                 ref
                                     .read(forecastPageProvider.notifier)
                                     .fetchForecastWeather(
-                                      cityName: listOfCities[index].$1,
-                                      countryName: listOfCities[index].$2,
+                                  cityName: homePageModel.citiesWeather![index].cityName,
+                                  countryName: homePageModel.citiesWeather![index].countryName,
                                     );
 
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ForecastPage(cityName: listOfCities[index].$1),
+                                    builder: (context) => ForecastPage(
+                                        cityName: homePageModel.citiesWeather![index].cityName),
                                   ),
                                 );
                               },
@@ -125,6 +138,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     );
   }
 
+  /// Fetches the initial weather for the cities in [listOfCities].
   void _fetchInitialCitiesWeather() {
     ref
         .read(homePageProvider.notifier)

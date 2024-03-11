@@ -16,7 +16,7 @@ const titleStyle = TextStyle(
 
 const tempStyle = TextStyle(
   fontSize: 50.0,
-    fontWeight: FontWeight.w700,
+  fontWeight: FontWeight.w700,
 );
 
 const regularStyle = TextStyle(

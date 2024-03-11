@@ -3,6 +3,10 @@
 // The toJson methods were originally included in these classes however, these methods were removed because
 // the application does not require the functionality to convert these objects back into JSON format.
 
+/// This file contains the model classes for the forecast weather data.
+///
+/// Converts a JSON string to a ForecastWeatherModel object.
+
 import 'dart:convert';
 
 // Function to create a ForecastWeatherModel object from a JSON string

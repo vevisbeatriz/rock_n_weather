@@ -1,6 +1,7 @@
-// Define a class to model the weather in a city
+/// Define a class to model the weather in a city
 class WeatherModel {
   final String cityName; // Name of the city
+  final String countryName; // Name of the country
   final double currentTemperature; // Temperature in the city
   final double? minTemperature; // Minimum temperature in the city
   final double? maxTemperature; // Maximum temperature in the city
@@ -10,17 +11,19 @@ class WeatherModel {
 
   WeatherModel({
     required this.cityName,
+    required this.countryName,
     required this.currentTemperature,
     this.minTemperature,
     this.maxTemperature,
-     this.description,
-     this.icon,
-     this.date,
+    this.description,
+    this.icon,
+    this.date,
   });
 
-  // Define a method to create a copy of the CityWeatherModel with some properties possibly changed
+  /// Define a method to create a copy of the CityWeatherModel with some properties possibly changed
   copyWith({
     String? cityName,
+    String? countryName,
     double? currentTemperature,
     double? minTemperature,
     double? maxTemperature,
@@ -30,6 +33,7 @@ class WeatherModel {
   }) {
     return WeatherModel(
       cityName: cityName ?? this.cityName,
+countryName: countryName ?? this.countryName,
       currentTemperature: currentTemperature ?? this.currentTemperature,
       minTemperature: minTemperature ?? this.minTemperature,
       maxTemperature: maxTemperature ?? this.maxTemperature,

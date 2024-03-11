@@ -2,15 +2,19 @@ import 'package:dio/dio.dart';
 import 'package:rock_n_weather/services/models/current_weather_model.dart';
 import 'package:rock_n_weather/services/models/forecast_weather_model.dart';
 
-// API key for OpenWeatherMap
+/// API key for OpenWeatherMap
 const apiKey = '40cfe72eb26fa8c49c9fbb1c28d87d81';
 
-// Creating an instance of Dio for making HTTP requests
+/// Creating an instance of Dio for making HTTP requests
 final dio = Dio();
 
-// WeatherService class that contains methods to fetch weather data
+/// WeatherService class that contains methods to fetch weather data
 class WeatherService {
-  // Method to fetch current weather data
+  /// Method to fetch current weather data
+  ///
+  /// @param cityName The name of the city for which to fetch the weather data.
+  /// @param countryName The name of the country in which the city is located.
+  /// @return A Future that completes with a CurrentWeatherModel if the request was successful, or null otherwise.
   static Future<CurrentWeatherModel?> getWeatherData(
       {required String cityName, required String countryName}) async {
     Response response;
@@ -36,7 +40,11 @@ class WeatherService {
     return null;
   }
 
-  // Method to fetch forecast weather data
+  /// Method to fetch forecast weather data
+  ///
+  /// @param cityName The name of the city for which to fetch the forecast data.
+  /// @param countryName The name of the country in which the city is located.
+  /// @return A Future that completes with a ForecastWeatherModel if the request was successful, or null otherwise.
   static Future<ForecastWeatherModel?> getForecastData(
       {required String cityName, required String countryName}) async {
     Response response;

@@ -3,10 +3,15 @@
 // The toJson methods were originally included in these classes however, these methods were removed because
 // the application does not require the functionality to convert these objects back into JSON format.
 
+/// This file contains the model classes for the current weather data.
+///
+/// Converts a JSON string to a CurrentWeatherModel object.
+
 import 'dart:convert';
 
 // Function to create a CurrentWeatherModel object from a JSON string
-CurrentWeatherModel currentWeatherModelFromJson(String str) => CurrentWeatherModel.fromJson(json.decode(str));
+CurrentWeatherModel currentWeatherModelFromJson(String str) =>
+    CurrentWeatherModel.fromJson(json.decode(str));
 
 // Class representing the current weather model
 class CurrentWeatherModel {
@@ -43,23 +48,26 @@ class CurrentWeatherModel {
   });
 
   // A factory constructor that creates a `CurrentWeatherModel` from a map.
-  factory CurrentWeatherModel.fromJson(Map<String, dynamic> json) => CurrentWeatherModel(
-    coord: json["coord"] == null ? null : Coord.fromJson(json["coord"]),
-    weather: json["weather"] == null ? [] : List<Weather>.from(json["weather"]!.map((x) => Weather.fromJson(x))),
-    base: json["base"],
-    main: json["main"] == null ? null : Main.fromJson(json["main"]),
-    visibility: json["visibility"],
-    wind: json["wind"] == null ? null : Wind.fromJson(json["wind"]),
-    rain: json["rain"] == null ? null : Rain.fromJson(json["rain"]),
-    clouds: json["clouds"] == null ? null : Clouds.fromJson(json["clouds"]),
-    dt: json["dt"],
-    sys: json["sys"] == null ? null : Sys.fromJson(json["sys"]),
-    timezone: json["timezone"],
-    id: json["id"],
-    name: json["name"],
-    cod: json["cod"],
-  );
-
+  factory CurrentWeatherModel.fromJson(Map<String, dynamic> json) =>
+      CurrentWeatherModel(
+        coord: json["coord"] == null ? null : Coord.fromJson(json["coord"]),
+        weather: json["weather"] == null
+            ? []
+            : List<Weather>.from(
+                json["weather"]!.map((x) => Weather.fromJson(x))),
+        base: json["base"],
+        main: json["main"] == null ? null : Main.fromJson(json["main"]),
+        visibility: json["visibility"],
+        wind: json["wind"] == null ? null : Wind.fromJson(json["wind"]),
+        rain: json["rain"] == null ? null : Rain.fromJson(json["rain"]),
+        clouds: json["clouds"] == null ? null : Clouds.fromJson(json["clouds"]),
+        dt: json["dt"],
+        sys: json["sys"] == null ? null : Sys.fromJson(json["sys"]),
+        timezone: json["timezone"],
+        id: json["id"],
+        name: json["name"],
+        cod: json["cod"],
+      );
 }
 
 class Clouds {
@@ -70,9 +78,8 @@ class Clouds {
   });
 
   factory Clouds.fromJson(Map<String, dynamic> json) => Clouds(
-    all: json["all"],
-  );
-
+        all: json["all"],
+      );
 }
 
 class Coord {
@@ -85,10 +92,9 @@ class Coord {
   });
 
   factory Coord.fromJson(Map<String, dynamic> json) => Coord(
-    lon: json["lon"]?.toDouble(),
-    lat: json["lat"]?.toDouble(),
-  );
-
+        lon: json["lon"]?.toDouble(),
+        lat: json["lat"]?.toDouble(),
+      );
 }
 
 class Main {
@@ -109,14 +115,13 @@ class Main {
   });
 
   factory Main.fromJson(Map<String, dynamic> json) => Main(
-    temp: json["temp"]?.toDouble(),
-    feelsLike: json["feels_like"]?.toDouble(),
-    tempMin: json["temp_min"]?.toDouble(),
-    tempMax: json["temp_max"]?.toDouble(),
-    pressure: json["pressure"],
-    humidity: json["humidity"],
-  );
-
+        temp: json["temp"]?.toDouble(),
+        feelsLike: json["feels_like"]?.toDouble(),
+        tempMin: json["temp_min"]?.toDouble(),
+        tempMax: json["temp_max"]?.toDouble(),
+        pressure: json["pressure"],
+        humidity: json["humidity"],
+      );
 }
 
 class Rain {
@@ -127,9 +132,8 @@ class Rain {
   });
 
   factory Rain.fromJson(Map<String, dynamic> json) => Rain(
-    the1H: json["1h"]?.toDouble(),
-  );
-
+        the1H: json["1h"]?.toDouble(),
+      );
 }
 
 class Sys {
@@ -148,13 +152,12 @@ class Sys {
   });
 
   factory Sys.fromJson(Map<String, dynamic> json) => Sys(
-    type: json["type"],
-    id: json["id"],
-    country: json["country"],
-    sunrise: json["sunrise"],
-    sunset: json["sunset"],
-  );
-
+        type: json["type"],
+        id: json["id"],
+        country: json["country"],
+        sunrise: json["sunrise"],
+        sunset: json["sunset"],
+      );
 }
 
 class Weather {
@@ -171,12 +174,11 @@ class Weather {
   });
 
   factory Weather.fromJson(Map<String, dynamic> json) => Weather(
-    id: json["id"],
-    main: json["main"],
-    description: json["description"],
-    icon: json["icon"],
-  );
-
+        id: json["id"],
+        main: json["main"],
+        description: json["description"],
+        icon: json["icon"],
+      );
 }
 
 class Wind {
@@ -189,8 +191,7 @@ class Wind {
   });
 
   factory Wind.fromJson(Map<String, dynamic> json) => Wind(
-    speed: json["speed"]?.toDouble(),
-    deg: json["deg"],
-  );
-
+        speed: json["speed"]?.toDouble(),
+        deg: json["deg"],
+      );
 }
