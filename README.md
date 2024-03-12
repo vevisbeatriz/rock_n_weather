@@ -1,7 +1,15 @@
 # Rock N Weather
 
 ## Description
-Rock N Weather is a weather tracking application designed for a rock'n'roll band staff. The application is built using Kotlin, Java, Gradle, Dart, and Pub. It provides current weather information in a user-friendly manner.
+Rock N Weather is a weather tracking application designed for a rock'n'roll band staff. It provides current weather information in a user-friendly manner.
+- The app uses riverpod for state management. Although the app is small and setState would be enough, I wanted to demonstrate my knowledge of riverpod.
+- Although I could use the weather plugin, I decided to use the OpenWeatherMap API directly to demonstrate my knowledge of making API requests and parsing JSON data.
+
+## TODO
+Although the app is functional, there are a few things that I would like to improve:
+- Adjust the date and time format for the timezones of the cities.
+- Show min and max temperatures in the home page.
+- Add more tests.
 
 ## Installation
 To install the project, clone the repository and open it in Android Studio. Make sure you have the Dart and Flutter plugins installed.

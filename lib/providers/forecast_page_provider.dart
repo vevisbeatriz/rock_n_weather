@@ -29,16 +29,17 @@ class ForecastPageNotifier extends StateNotifier<ForecastPageState> {
   ///
   /// Updates the state to loading before the request and to loaded after the request.
   /// If the forecast is null after the request, updates the state to error.
-  void fetchForecastWeather(
+  Future<void> fetchForecastWeather(
       {required String cityName, required String countryName}) async {
     state = state.copyWith(forecastPageStatus: ForecastStatusType.loading);
     final forecast = await _weatherRepository.fetchForecastWeather(
         cityName: cityName, countryName: countryName);
+    final result = forecast == null
+        ? ForecastStatusType.error
+        : ForecastStatusType.loaded;
     state = state.copyWith(
         forecast: forecast,
-        forecastPageStatus: forecast == null
-            ? ForecastStatusType.error
-            : ForecastStatusType.loaded);
+        forecastPageStatus: result);
   }
 }
 

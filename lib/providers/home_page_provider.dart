@@ -32,7 +32,7 @@ class HomePageNotifier extends StateNotifier<HomePageState> {
   ///
   /// Updates the state to loading before the request and to loaded after the request.
   /// If the citiesWeather is empty after the request, updates the state to error.
-  void fetchCitiesWeather(
+  Future<void> fetchCitiesWeather(
       {required List<(String cityName, String countryName)> cities}) async {
     List<WeatherModel>? citiesWeather = [];
     state = state.copyWith(homePageStatus: HomePageStatusType.loading);

@@ -8,40 +8,20 @@ import 'package:rock_n_weather/utilities/constants.dart';
 /// A widget that displays the forecast for a specific city.
 ///
 /// This is a [ConsumerStatefulWidget], which means it has access to the Riverpod state.
-class ForecastPage extends ConsumerStatefulWidget {
+class ForecastPage extends ConsumerWidget {
   const ForecastPage({super.key, required this.cityName});
 
   final String cityName;
 
   @override
-  _ForecastPageState createState() => _ForecastPageState();
-}
-
-/// The state for the [ForecastPage] widget.
-///
-/// This is where the logic for the forecast page is implemented.
-class _ForecastPageState extends ConsumerState<ForecastPage> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // Fetch the forecast for the specified city when the widget is first created.
-      ref.read(forecastPageProvider.notifier).fetchForecastWeather(
-            cityName: widget.cityName,
-            countryName: "UK",
-          );
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // Get the current state of the forecast page.
     final forecastPageModel = ref.watch(forecastPageProvider);
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.clearSkyLight,
-        title: Text(widget.cityName),
+        title: Text(cityName),
       ),
       body: forecastPageModel.forecastPageStatus == ForecastStatusType.loading
           ? const Center(child: CircularProgressIndicator())
@@ -50,8 +30,7 @@ class _ForecastPageState extends ConsumerState<ForecastPage> {
               : SafeArea(
                   child: GroupedListView(
                   // Sort the forecast by date and group it by day.
-                  elements: forecastPageModel.forecast!
-                    ..sort((a, b) => a.date!.compareTo(b.date!)),
+                  elements: forecastPageModel.forecast!,
                   groupBy: (element) =>
                       DateFormat('yyyy-MM-dd').format(element.date!),
                   groupSeparatorBuilder: (String groupByValue) => Padding(
@@ -63,6 +42,7 @@ class _ForecastPageState extends ConsumerState<ForecastPage> {
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ),
+                    itemComparator: (item1, item2) => (item1.date ?? DateTime.now()).compareTo(item2.date ?? DateTime.now()),
                   // For each forecast, display a card with the weather icon, time, description, and temperature.
                   itemBuilder: (context, dynamic element) {
                     final weather = element;
